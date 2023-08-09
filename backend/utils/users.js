@@ -1,5 +1,5 @@
 const users = [];
-
+const blockUsers=[]
 // Join user to chat
 function userJoin(id, username, room) {
   const user = { id, username, room };
@@ -15,6 +15,11 @@ users.forEach(item => {
 
 const uniqueIdCount = uniqueIds.size;
 return uniqueIdCount
+}
+
+
+function blockByAuthor(blockUserName,currentUser) {
+  blockUsers.push({blockUserName,currentUser})
 }
 
 function newJoinRoom(id, username, room) {
@@ -49,6 +54,19 @@ function findName(id) {
   return newName;
 }
 
+function checkUserAuthorize(userName) {
+  let unauthorize =null
+  blockUsers.forEach((v)=>{
+    if (v.blockUserName===userName) {
+      console.log('block user send message');
+      // return 'blocked'
+      unauthorize=userName
+    }
+
+  })
+  return unauthorize
+}
+
 // Get room users
 function getRoomUsers(room) {
   return users.filter((user) => user.room === room);
@@ -57,7 +75,7 @@ function getRoomUsers(room) {
 module.exports = {
   userJoin,
   getCurrentUser,userCount,
-  userLeave,
+  userLeave,blockByAuthor,checkUserAuthorize,
   getRoomUsers,
   findName,
   newJoinRoom,
